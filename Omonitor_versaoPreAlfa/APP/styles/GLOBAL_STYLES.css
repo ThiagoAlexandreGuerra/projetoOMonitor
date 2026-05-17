@@ -1,0 +1,36 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    border: none;
+
+}
+
+body{
+    background-color: rgba(15, 15, 15, 0.925);
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+.caixa-scroll::-webkit-scrollbar {
+    background-color: #000000;
+    width: 3px;
+}
+
+.caixa-scroll::-webkit-scrollbar-thumb {
+    background-color: #c00000;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar{
+    background-color:#000000;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb{
+    background-color:#ffbb00ec;
+    border-radius: 8px;
+}
+
+.loginBackgroundColor{
+ background: #0d0800;
+background: linear-gradient(140deg, rgba(13, 8, 0, 1) 0%, rgba(38, 24, 0, 0) 10%, rgba(89, 54, 0, 0) 23%, rgba(204, 0, 0, 0) 28%, rgba(235, 133, 0, 0.58) 39%, rgba(255, 145, 0, 0.71) 59%, rgba(255, 145, 0, 0.93) 74%, rgba(224, 135, 0, 1) 89%, rgba(194, 110, 0, 1) 100%);
+}
