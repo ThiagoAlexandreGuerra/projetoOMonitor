@@ -1,0 +1,1 @@
+export const ENDPOINT_API= 'http://localhost:8080/Api/index.php?option=';

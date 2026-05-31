@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Monitor - Landing Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #000000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .badge {
+            border: 2px solid white;
+            padding: 8px 24px;
+            margin-bottom: 40px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #ffffff;
+            display: inline-block;
+        }
+        
+        h1 {
+            font-size: 64px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            max-width: 800px;
+        }
+        
+        .highlight {
+            border-bottom: 2px solid white;
+        }
+        
+        .subtitulo {
+            font-size: 18px;
+            color: #888888;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .botoes {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary {
+            padding: 14px 32px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #dddddd;
+        }
+        
+        .btn-outline {
+            padding: 14px 32px;
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #888888;
+        }
+        
+        /* Seção Matérias */
+        .materias {
+            background-color: #0a0a0a;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: #888888;
+            margin-bottom: 60px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: #000000;
+            border: 1px solid #333333;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: #ffffff;
+            transform: translateY(-5px);
+        }
+        
+        .card i {
+            font-size: 48px;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        
+        .card h3 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .card p {
+            font-size: 14px;
+            color: #888888;
+        }
+        
+        /* Sobre Nós */
+        .sobre {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .sobre-texto {
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .sobre-badge {
+            color: #888888;
+            font-size: 14px;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 16px;
+        }
+        
+        .sobre-titulo {
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+        
+        .sobre-desc {
+            font-size: 16px;
+            color: #888888;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .feature {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        
+        .feature i {
+            font-size: 24px;
+            color: #ffffff;
+        }
+        
+        .feature h4 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+        
+        .feature p {
+            font-size: 14px;
+            color: #888888;
+        }
+        
+        .sobre-imagem {
+            flex: 1;
+            min-width: 280px;
+            background-color: #111111;
+            border: 1px solid #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+        }
+        
+        .sobre-imagem i {
+            font-size: 100px;
+            color: #ffffff;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #111111;
+            border-top: 1px solid #333333;
+            padding: 60px 20px 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo h3 {
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        
+        .footer-logo span {
+            border: 1px solid white;
+            padding: 4px 8px;
+        }
+        
+        .footer-logo p {
+            color: #888888;
+            font-size: 14px;
+            max-width: 250px;
+        }
+        
+        .footer-links h4, .footer-contato h4 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #888888;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .footer-links a:hover {
+            color: #ffffff;
+        }
+        
+        .footer-contato p {
+            color: #888888;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333333;
+            color: #888888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="badge">CONCURSO BB 2025</div>
+        <h1>
+            <span style="border: 2px solid white; padding: 4px 12px; display: inline-block; margin-bottom: 20px;">
+                O Monitor
+            </span>
+            <br>
+            Prepare-se para o<br>
+            <span class="highlight">Banco do Brasil</span>
+        </h1>
+        <p class="subtitulo">
+            Mais de 1000 questões de provas anteriores, filtradas por 
+            disciplina, assunto e nível de dificuldade. Acompanhe seu 
+            desempenho e alcance sua aprovação.
+        </p>
+        <div class="botoes">
+            <button class="btn-primary" onclick="alert('Cadastro em breve!')">Começar agora →</button>
+            <button class="btn-outline" onclick="alert('Demonstração em breve!')">Ver demonstração</button>
+        </div>
+        <div class="stats">
+            <div><div class="stat-number">1000+</div><div class="stat-label">Questões</div></div>
+            <div><div class="stat-number">10+</div><div class="stat-label">Disciplinas</div></div>
+            <div><div class="stat-number">5000+</div><div class="stat-label">Usuários</div></div>
+        </div>
+    </section>
+
+    <!-- Matérias -->
+    <section class="materias">
+        <h2 class="section-title">Matérias <span class="highlight">Disponíveis</span></h2>
+        <p class="section-subtitle">Conteúdo completo para sua preparação</p>
+        <div class="grid">
+            <div class="card"><i class="fas fa-calculator"></i><h3>Matemática</h3><p>250+ questões</p></div>
+            <div class="card"><i class="fas fa-chart-line"></i><h3>Estatística</h3><p>180+ questões</p></div>
+            <div class="card"><i class="fas fa-gavel"></i><h3>Direito</h3><p>320+ questões</p></div>
+            <div class="card"><i class="fas fa-language"></i><h3>Português</h3><p>200+ questões</p></div>
+            <div class="card"><i class="fas fa-brain"></i><h3>Raciocínio Lógico</h3><p>150+ questões</p></div>
+            <div class="card"><i class="fas fa-university"></i><h3>Conhecimentos Bancários</h3><p>300+ questões</p></div>
+            <div class="card"><i class="fas fa-chart-pie"></i><h3>Economia</h3><p>120+ questões</p></div>
+            <div class="card"><i class="fas fa-laptop-code"></i><h3>Informática</h3><p>180+ questões</p></div>
+        </div>
+    </section>
+
+    <!-- Sobre Nós -->
+    <div class="sobre">
+        <div class="sobre-texto">
+            <span class="sobre-badge">SOBRE NÓS</span>
+            <h2 class="sobre-titulo">Quem está por trás do <span class="highlight">O Monitor</span>?</h2>
+            <p class="sobre-desc">
+                Somos uma equipe de estudantes de Ciência da Computação apaixonados por educação e tecnologia. 
+                O Monitor nasceu da necessidade de uma ferramenta gratuita e eficiente para ajudar concurseiros 
+                a se prepararem para o concurso do Banco do Brasil.
+            </p>
+            <div class="features">
+                <div class="feature"><i class="fas fa-users"></i><div><h4>Time Dedicado</h4><p>Desenvolvedores focados em criar a melhor experiência</p></div></div>
+                <div class="feature"><i class="fas fa-chalkboard-user"></i><div><h4>Foco no Estudante</h4><p>Tudo pensado para otimizar seus estudos</p></div></div>
+                <div class="feature"><i class="fas fa-rocket"></i><div><h4>Em Constante Evolução</h4><p>Atualizações semanais com novas funcionalidades</p></div></div>
+            </div>
+        </div>
+        <div class="sobre-imagem">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3><span>O</span> Monitor</h3>
+                <p>Sua plataforma de estudos para o concurso do Banco do Brasil.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Links Rápidos</h4>
+                <ul>
+                    <li><a onclick="window.scrollTo({top:0,behavior:'smooth'})">Início</a></li>
+                    <li><a onclick="document.querySelector('.materias').scrollIntoView({behavior:'smooth'})">Matérias</a></li>
+                    <li><a onclick="document.querySelector('.sobre').scrollIntoView({behavior:'smooth'})">Sobre Nós</a></li>
+                </ul>
+            </div>
+            <div class="footer-contato">
+                <h4>Contato</h4>
+                <p><i class="fas fa-envelope"></i> contato@omonitor.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 O Monitor. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
