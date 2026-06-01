@@ -1,0 +1,16 @@
+{
+    "require": {
+        "cycle/orm": "^2.16",
+        "cycle/annotated": "^4.5",
+        "cycle/schema-builder": "^2.11",
+        "cycle/database": "^2.19",
+        "spiral/tokenizer": "^3.16",
+        "cycle/migrations": "^4.2",
+        "cycle/schema-migrations-generator": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
