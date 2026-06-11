@@ -13,6 +13,7 @@ import CoordenadorLayout from "../../javascript/utils/CoordenadorLayout.js";
 import BlocoExecucao from "../../javascript/utils/BlocosExecucao.js";
 import DivParaNavegacao from "../../javascript/utils/DivParaNavegacao.js";
 import LandingPage from "./layouts/landingPage/landingPage.js";
+import PaginaQuestoes from "./layouts/paginaQuestoes/paginaQuestoes.js";
 
 export default class HomeView {
 
@@ -34,7 +35,7 @@ export default class HomeView {
         // EXEMPLO RELOGIO *****************************************************************************
         const relogio = new Relogio();
 
-        // BLOCO LANDING PAGE **************************************************************************
+        // BLOCO LANDING PAGE (Tela inicial) ***********************************************************
         const blocoLandingPage = new BlocoExecucao({
             existe: ["landing-page"],
             onEnter: [
@@ -51,7 +52,24 @@ export default class HomeView {
             ]
         });
 
-        // BLOCO SHOWROOM (Tela inicial) ***************************************************************
+        // BLOCO PÁGINA DE QUESTÕES ********************************************************************
+        const blocoPaginaQuestoes = new BlocoExecucao({
+            existe: ["pagina-questoes"],
+            onEnter: [
+                () => {
+                    console.log("Entrando na Página de Questões");
+                    const paginaQuestoes = new PaginaQuestoes(eventos, this._navegacao);
+                }
+            ],
+            onExit: [
+                () => {
+                    console.log("Saindo da Página de Questões");
+                    eventos.onLimparElementosDom("pagina-questoes");
+                }
+            ]
+        });
+
+        // BLOCO SHOWROOM (Tela de demonstração do framework) ******************************************
         const blocoShowroom = new BlocoExecucao({
             existe: ["iniciar"],
             onEnter: [
@@ -87,9 +105,10 @@ export default class HomeView {
 
         // COORDENADOR DE LAYOUT - Gerencia a ordem e transição entre os blocos ***********************
         new CoordenadorLayout(
-            blocoLandingPage,  // Primeiro: Landing Page
-            blocoShowroom,     // Segundo: Showroom (tela inicial do framework)
-            blocoMain          // Terceiro: Main (área principal do sistema)
+            blocoLandingPage,      // Primeiro: Landing Page
+            blocoPaginaQuestoes,   // Segundo: Página de Questões
+            blocoShowroom,         // Terceiro: Showroom (tela inicial do framework)
+            blocoMain              // Quarto: Main (área principal do sistema)
         );
     }
 }
