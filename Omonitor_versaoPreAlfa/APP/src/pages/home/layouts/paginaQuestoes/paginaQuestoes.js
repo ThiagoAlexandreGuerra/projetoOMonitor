@@ -42,7 +42,7 @@ export default class PaginaQuestoes {
     criarHeader() {
         const header = renderizarElementos("div", {
             backgroundColor: "#111111",
-            borderBottom: "1px solid #333333",
+            borderBottom: "2px solid #FFB800",
             padding: "16px 32px",
             display: "flex",
             justifyContent: "space-between",
@@ -59,27 +59,33 @@ export default class PaginaQuestoes {
             color: "#ffffff",
             margin: "0",
             whiteSpace: "nowrap"
-        }, { innerHTML: "<span style='border:1px solid white;padding:4px 8px;'>O</span> Monitor" });
+        }, { innerHTML: "<span style='border:1px solid #ffffff;padding:4px 8px;color:#ffffff;'>O</span> <span style='color:#ffffff;'>Monitor</span>" });
 
         const btnVoltar = renderizarElementos("button", {
             padding: "8px 20px",
             backgroundColor: "transparent",
             color: "#ffffff",
-            border: "1px solid #ffffff",
+            border: "1px solid #FFB800",
             cursor: "pointer",
             borderRadius: "4px",
             fontSize: "14px",
             transition: "all 0.3s ease"
-        }, { textContent: "← Voltar à Landing Page" });
-        
+        }, { innerHTML: '<i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Voltar' });
+
         btnVoltar.onmouseenter = () => {
-            btnVoltar.style.backgroundColor = "rgba(255,255,255,0.1)";
+            btnVoltar.style.backgroundColor = "#FFB800";
+            btnVoltar.style.color = "#000000";
         };
         btnVoltar.onmouseleave = () => {
             btnVoltar.style.backgroundColor = "transparent";
+            btnVoltar.style.color = "#ffffff";
         };
+
+        // CORREÇÃO: Remove o container corretamente
         btnVoltar.onclick = () => {
-            this.container.remove();
+            if (this.container && this.container.parentNode) {
+                this.container.parentNode.removeChild(this.container);
+            }
             this.navegacao._chamarProximaClasseDoLayout("landing-page");
         };
 
@@ -87,7 +93,7 @@ export default class PaginaQuestoes {
             display: "flex",
             gap: "16px"
         });
-        
+
         const btnPerfil = renderizarElementos("button", {
             padding: "8px 20px",
             backgroundColor: "transparent",
@@ -96,11 +102,10 @@ export default class PaginaQuestoes {
             cursor: "pointer",
             borderRadius: "4px",
             fontSize: "14px"
-        }, { textContent: " Meu Perfil" });
+        }, { innerHTML: '<i class="fas fa-user-circle" style="margin-right: 8px;"></i> Meu Perfil' });
 
         rightDiv.appendChild(btnPerfil);
         rightDiv.appendChild(btnVoltar);
-
         header.appendChild(logo);
         header.appendChild(rightDiv);
         this.container.appendChild(header);

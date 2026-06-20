@@ -71,8 +71,15 @@ export default class LandingPage {
             btnAreaUsuario.style.color = "#ffffff";
         };
 
-        btnAreaUsuario.onclick = () => this.navegacao._chamarProximaClasseDoLayout("pagina-questoes");
-
+        // CORREÇÃO AQUI: agora navega para "area-usuario"
+        btnAreaUsuario.onclick = () => {
+        // Remove o container da Landing Page
+        if (this.container && this.container.parentNode) {
+            this.container.parentNode.removeChild(this.container);
+        }
+        // Navega para a Área do Usuário
+        this.navegacao._chamarProximaClasseDoLayout("area-usuario");
+    };
         header.appendChild(logo);
         header.appendChild(btnAreaUsuario);
         this.container.appendChild(header);
@@ -453,26 +460,27 @@ export default class LandingPage {
 
         const links = ["Início", "Matérias", "Sobre Nós", "Área do Usuário"];
 
-        links.forEach(link => {
-            const li = renderizarElementos("li", { marginBottom: "12px" });
-            const a = renderizarElementos("a", {
-                color: "#888888",
-                textDecoration: "none",
-                cursor: "pointer",
-                transition: "color 0.3s ease"
-            }, { textContent: link });
+    links.forEach(link => {
+        const li = renderizarElementos("li", { marginBottom: "12px" });
+        const a = renderizarElementos("a", {
+        color: "#888888",
+        textDecoration: "none",
+        cursor: "pointer",
+        transition: "color 0.3s ease"
+    }, { textContent: link });
 
-            a.onmouseenter = () => a.style.color = "#FFB800";
-            a.onmouseleave = () => a.style.color = "#888888";
+        a.onmouseenter = () => a.style.color = "#FFB800";
+        a.onmouseleave = () => a.style.color = "#888888";
 
-            a.onclick = () => {
-                if (link === "Início") window.scrollTo({ top: 0, behavior: "smooth" });
-                if (link === "Matérias") document.querySelector(".landing-page")?.scrollIntoView({ behavior: "smooth" });
-                if (link === "Área do Usuário") this.navegacao._chamarProximaClasseDoLayout("pagina-questoes");
-            };
+        a.onclick = () => {
+         if (link === "Início") window.scrollTo({ top: 0, behavior: "smooth" });
+         if (link === "Matérias") document.querySelector(".landing-page")?.scrollIntoView({ behavior: "smooth" });
+         // CORREÇÃO AQUI: agora navega para "area-usuario"
+         if (link === "Área do Usuário") this.navegacao._chamarProximaClasseDoLayout("area-usuario");
+     };
 
-            li.appendChild(a);
-            linksList.appendChild(li);
+     li.appendChild(a);
+     linksList.appendChild(li);
         });
 
         linksDiv.appendChild(linksTitulo);

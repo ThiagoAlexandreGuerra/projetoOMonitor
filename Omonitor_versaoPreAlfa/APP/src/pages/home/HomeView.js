@@ -1,114 +1,113 @@
 import Titulo from "../../components/titulo/Titulo.js";
 import Relogio from "../../components/relogio/Relogio.js";
-import Formulario from "../../components/formulario/Formulario.js";
 import Intro from "../../components/intro/intro.js";
 import Favicon from "../../components/favicon/Favicon.js";
-import barraLateralEsquerda from "./layouts/barraLateralEsquerda/barraLateralEsquerda.js";
-import barraLateralDireita from "./layouts/barraLateralDireita/barraLateralDireita.js";
-import showroom from "./layouts/showroom/showroom.js";
-import displayQuestoes from "./layouts/displayQuestoes/displayQuestoes.js";
-import formulario from "./layouts/formulario/formulario.js";
-import exemploCaixaBasica from "./layouts/exemploCaixaBasica/exemploCaixaBasica.js";
 import CoordenadorLayout from "../../javascript/utils/CoordenadorLayout.js";
 import BlocoExecucao from "../../javascript/utils/BlocosExecucao.js";
 import DivParaNavegacao from "../../javascript/utils/DivParaNavegacao.js";
 import LandingPage from "./layouts/landingPage/landingPage.js";
+import AreaUsuario from "./layouts/areaUsuario/areaUsuario.js";
+import Cronograma from "./layouts/cronograma/cronograma.js";
 import PaginaQuestoes from "./layouts/paginaQuestoes/paginaQuestoes.js";
 
 export default class HomeView {
-
     constructor() {
         this._navegacao = new DivParaNavegacao();
     }
 
     criarLayout(eventos) {
-
-        // EXEMPLO FAVICON *****************************************************************************
+        // ============================================================
+        // COMPONENTES GLOBAIS
+        // ============================================================
         const favicon = new Favicon("O Monitor");
-
-        // EXEMPLO INTRO *******************************************************************************
         const intro = new Intro();
-
-        // EXEMPLO TITULO VIEW *************************************************************************
         const titulo = new Titulo("O Monitor - Pré Alpha");
-
-        // EXEMPLO RELOGIO *****************************************************************************
         const relogio = new Relogio();
 
-        // BLOCO LANDING PAGE (Tela inicial) ***********************************************************
+        // ============================================================
+        // BLOCO 1: LANDING PAGE (Tela inicial)
+        // ============================================================
         const blocoLandingPage = new BlocoExecucao({
             existe: ["landing-page"],
             onEnter: [
                 () => {
-                    console.log("Entrando na Landing Page");
-                    const landing = new LandingPage(eventos, this._navegacao);
+                    console.log("🚀 Entrando na Landing Page");
+                    new LandingPage(eventos, this._navegacao);
                 }
             ],
             onExit: [
                 () => {
-                    console.log("Saindo da Landing Page");
+                    console.log("🔚 Saindo da Landing Page");
                     eventos.onLimparElementosDom("landing-page");
                 }
             ]
         });
 
-        // BLOCO PÁGINA DE QUESTÕES ********************************************************************
-        const blocoPaginaQuestoes = new BlocoExecucao({
-            existe: ["pagina-questoes"],
+        // ============================================================
+        // BLOCO 2: ÁREA DO USUÁRIO
+        // ============================================================
+        const blocoAreaUsuario = new BlocoExecucao({
+            existe: ["area-usuario"],
             onEnter: [
                 () => {
-                    console.log("Entrando na Página de Questões");
-                    const paginaQuestoes = new PaginaQuestoes(eventos, this._navegacao);
+                    console.log("👤 Entrando na Área do Usuário");
+                    new AreaUsuario(eventos, this._navegacao);
                 }
             ],
             onExit: [
                 () => {
-                    console.log("Saindo da Página de Questões");
+                    console.log("🔚 Saindo da Área do Usuário");
+                    eventos.onLimparElementosDom("area-usuario");
+                }
+            ]
+        });
+
+        // ============================================================
+        // BLOCO 3: CRONOGRAMA
+        // ============================================================
+        const blocoCronograma = new BlocoExecucao({
+            existe: ["pagina-cronograma"],
+            onEnter: [
+                () => {
+                    console.log("📅 Entrando no Cronograma");
+                    new Cronograma(eventos, this._navegacao);
+                }
+            ],
+            onExit: [
+                () => {
+                    console.log("🔚 Saindo do Cronograma");
+                    eventos.onLimparElementosDom("pagina-cronograma");
+                }
+            ]
+        });
+
+        // ============================================================
+        // BLOCO 4: PÁGINA DE QUESTÕES
+        // ============================================================
+        const blocoPaginaQuestoes = new BlocoExecucao({
+            existe: ["pagina-questoes"],
+            onEnter: [
+                () => {
+                    console.log("📝 Entrando na Página de Questões");
+                    new PaginaQuestoes(eventos, this._navegacao);
+                }
+            ],
+            onExit: [
+                () => {
+                    console.log("🔚 Saindo da Página de Questões");
                     eventos.onLimparElementosDom("pagina-questoes");
                 }
             ]
         });
 
-        // BLOCO SHOWROOM (Tela de demonstração do framework) ******************************************
-        const blocoShowroom = new BlocoExecucao({
-            existe: ["iniciar"],
-            onEnter: [
-                () => showroom(eventos, this._navegacao)
-            ],
-            onExit: [
-                () => {
-                    eventos.onLimparElementosDom("showroom");
-                }
-            ]
-        });
-
-        // BLOCO MAIN (Área principal com barra lateral, questões, etc) *******************************
-        const blocoMain = new BlocoExecucao({
-            existe: ["chamaBlocoMain"],
-            onEnter: [
-                () => barraLateralDireita(eventos, this._navegacao),
-                () => barraLateralEsquerda(eventos, this._navegacao),
-                () => displayQuestoes(eventos),
-                () => formulario(eventos),
-                () => exemploCaixaBasica(eventos),
-            ],
-            onExit: [
-                () => {
-                    eventos.onLimparElementosDom("chamaBlocoMain");
-                    eventos.onLimparElementosDom("barraLateral");
-                    eventos.onLimparElementosDom("displayQuestoes");
-                    eventos.onLimparElementosDom("formulario");
-                    eventos.onLimparElementosDom("exemploCaixaBasica");
-                }
-            ]
-        });
-
-        // COORDENADOR DE LAYOUT - Gerencia a ordem e transição entre os blocos ***********************
+        // ============================================================
+        // COORDENADOR DE LAYOUT - Gerencia a ordem e transição entre os blocos
+        // ============================================================
         new CoordenadorLayout(
-            blocoLandingPage,      // Primeiro: Landing Page
-            blocoPaginaQuestoes,   // Segundo: Página de Questões
-            blocoShowroom,         // Terceiro: Showroom (tela inicial do framework)
-            blocoMain              // Quarto: Main (área principal do sistema)
+            blocoLandingPage,      // 1º: Landing Page (tela inicial)
+            blocoAreaUsuario,      // 2º: Área do Usuário
+            blocoCronograma,       // 3º: Cronograma
+            blocoPaginaQuestoes    // 4º: Página de Questões
         );
     }
 }
