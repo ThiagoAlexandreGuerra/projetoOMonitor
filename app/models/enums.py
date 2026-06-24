@@ -1,0 +1,20 @@
+from enum import StrEnum
+
+
+class NivelDificuldade(StrEnum):
+    FACIL = "FACIL"
+    MEDIO = "MEDIO"
+    DIFICIL = "DIFICIL"
+
+
+class StatusResposta(StrEnum):
+    NAO_RESPONDIDA = "NAO_RESPONDIDA"
+    EM_ANDAMENTO = "EM_ANDAMENTO"
+    RESPONDIDA_CORRETA = "RESPONDIDA_CORRETA"
+    RESPONDIDA_INCORRETA = "RESPONDIDA_INCORRETA"
+    MARCADA_REVISAO = "MARCADA_REVISAO"
+
+
+class TipoNotificacao(StrEnum):
+    LEMBRETE_ESTUDO = "LEMBRETE_ESTUDO"
+    META_CONCLUIDA = "META_CONCLUIDA"

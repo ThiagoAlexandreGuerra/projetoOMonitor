@@ -1,0 +1,31 @@
+# Migrações Alembic
+
+Este diretório contém a configuração e as revisões de banco de dados do backend.
+
+## Componentes
+
+- `env.py`: carrega os modelos SQLModel e configura execução online/offline.
+- `versions/`: armazena as revisões versionadas.
+- `../alembic.ini`: define `script_location` e a URL padrão `sqlite:///./database.sqlite`.
+
+## Aplicar migrações
+
+Na raiz do repositório:
+
+```bash
+uv run alembic upgrade head
+```
+
+## Criar nova revisão
+
+Depois de alterar modelos em `app/models/`, gere uma nova revisão:
+
+```bash
+uv run alembic revision --autogenerate -m "descreva a alteracao"
+```
+
+Revise o arquivo criado em `migrations/versions/` antes de aplicar. O projeto usa `render_as_batch=True`, necessário para alterações em SQLite.
+
+## Estado atual
+
+A revisão inicial cria as tabelas principais do domínio: usuários, administradores, disciplinas, questões, alternativas, respostas, histórico, metas, favoritos, estatísticas e notificações.
