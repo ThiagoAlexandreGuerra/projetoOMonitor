@@ -11,7 +11,7 @@ export default class AppInstallButton extends  ClickEventButton{
         this._classIdentify = "APB";
         this._id = getId(this._classIdentify);
         
-        this._className.push("AppInstallButton");
+        this._classNName.push("AppInstallButton");
 
         this._swapPropertyConfig ({
 

@@ -16,7 +16,7 @@ export default class ClickEventButton extends StandartButton {
         functions.map(fn => () => fn())
     );
 
-    this._className.push("ClickEventButton");
+    this._classNName.push("ClickEventButton");
 
     this._updatePropertyConfig({
         className: this.getElementClassNames(),

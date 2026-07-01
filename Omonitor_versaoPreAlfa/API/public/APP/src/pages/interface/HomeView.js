@@ -10,6 +10,7 @@ import showroom         from "../layout/showroom/showroom.js";
 import landingPage      from "../layout/landingPage/landingPage.js";
 import questionConsole  from "../layout/console/questionConsole.js";
 import login            from "../layout/login/login.js";
+import landingPageBanks from "../layout/landingPage/components/landingPageBanks.js";
 export default class HomeView {
 
     constructor() {
@@ -45,7 +46,20 @@ export default class HomeView {
                             ],
 
                             onExit: [
-                                () => {events.onCleanDOMElements("lLandingPage");}
+                                () => {events.onCleanDOMElements("lLandingPages");}
+                            ],
+                }),
+
+                  new ExecutionBlock({
+
+                            existe: ["landingPageBanks"],
+
+                            onEnter: [
+                                ()=>{landingPageBanks(this._navigation)}
+                            ],
+
+                            onExit: [
+                                () => {events.onCleanDOMElements("lLandingPageBanks");}
                             ],
                 }),
 
@@ -74,8 +88,6 @@ export default class HomeView {
                                 ()=> {events.onCleanDOMElements("lLogin")}
                             ],
                 }),
-
-
         
         );
 

@@ -1,7 +1,7 @@
-import StandartComponent from "../../StandardComponent/StandardComponent.js";
-import getId from "../../componentIdentify/componentId/getId.js";
+import StandardComponent    from "../../standardComponent/main/StandardComponent.js";
+import getId                from "../../componentIdentify/componentId/getId.js";
 
-export default class Sidebar extends StandartComponent{
+export default class Sidebar extends StandardComponent{
 
     constructor(orientation = "left"){
 
@@ -10,7 +10,7 @@ export default class Sidebar extends StandartComponent{
         this._classIdentify = "SIB"
         this._id = getId(this._classIdentify);
 
-        this._className.push("SideBar");
+        this._classNName.push("SideBar");
 
         this._orientation = orientation == "left"? true:false;
 

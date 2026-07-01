@@ -1,39 +1,25 @@
-import createVirtualNode from "../../virtualDOM/createVirtualNode/createVirtualNode.js";
-import StyleController from "../styleController/StyleController.js";
-import getId from "../componentIdentify/componentId/getId.js";
-import {virtualDom} from "../../virtualDOM/main/virtualDom.js";
+import createVirtualNode from "../../../virtualDOM/createVirtualNode/createVirtualNode.js";
+import StyleController from "../StyleController.js";
+import getId from "../../componentIdentify/componentId/getId.js";
+import {virtualDom} from "../../../virtualDOM/main/virtualDom.js";
+import JoinLayers from "../JoinLayers.js";
+import JoinStylesGetersAndSetersToAssembly from "../JoinStylesGetersAndSetersToAssembly.js";
+import getCaller from "../../utils/getters/getCaller.js";
+import { VALID_EVENTS } from "../isValid/lists.js";
 
-
-import getCaller from "../utils/getters/getCaller.js";
-
-export default class StandardComponent extends StyleController{
+export default class StandardComponent extends JoinStylesGetersAndSetersToAssembly{
 
     constructor(tag = "div" , isAutoDisplay = true) {
 
         super();
 
-        this._className = [];
-        this._className.push("StandartComponent");
+        this._classNName.push("StandartComponent");
         this._classIdentify = "SDC";
         this._id = getId(this._classIdentify);
         
         this._tag = tag;
         this._isAutoDisplay = isAutoDisplay;
-        this._children = [];
-        this._isChild = false;
-        this._function= [];
-        this._behaviorFunction = [];
-        this._elementCallbacks = [{
-            callbackFunction: null,
-            eventType:"", 
-        }];
 
-        this.heritage = [{
-            parentWidth: "",
-            parentHeight: "",
-            parentBackgroundColor:"",
-        }]
-        
         this._updatePropertyConfig({
             
                 className:          this.getElementClassNames(),
@@ -44,75 +30,35 @@ export default class StandardComponent extends StyleController{
             this.createStandardComponent();
         });
 
-        this.VALID_EVENTS = new Set([
-             "click",
-             "dblclick",
-             "mousedown",
-             "mouseup",
-             "mousemove",
-             "mouseenter",
-             "mouseleave",
-             "mouseover",
-             "mouseout",
-             "contextmenu",
-            
-             "keydown",
-             "keyup",
-             "keypress",
-            
-             "input",
-             "change",
-             "submit",
-             "focus",
-             "blur",
-            
-             "drag",
-             "dragstart",
-             "dragend",
-             "dragenter",
-             "dragleave",
-             "dragover",
-             "drop",
-            
-             "touchstart",
-             "touchmove",
-             "touchend",
-            
-             "wheel",
-             "scroll",
-            
-             "load",
-             "resize",
-             "error",
-            
-             "play",
-             "pause",
-             "ended",
-            
-             "copy",
-             "cut",
-             "paste"
-        ]);
-
     }
 
     _addLayoutName(className){
-        this._className.push(className);
+        this._classNName.push(className);
         this._updatePropertyConfig({
             className:          this.getElementClassNames(),
         })
         return this;
     }
 
+    getChild(index){
+        if(index>this._children.length){return null;}
+
+        return this?._children[index];
+    }
     getId(){
         return this._id;
     }
-
+    getChildrenId() {
+        return {
+            parentId: this._id,
+            child: this._children.map(child => child.getChildrenId())
+        };
+    }
     getElementClassNames() {
 
         let classNameReturn = "";
 
-        for (const className of this._className) {
+        for (const className of this._classNName) {
 
             classNameReturn += `${className} `;
         }
@@ -129,6 +75,14 @@ export default class StandardComponent extends StyleController{
         return true;
     }
 
+    setBehaviourFunctions(...functions_){
+        functions_.forEach((func)=>{
+            if(typeof func == "function"){
+                this._behaviorFunction.push(function(){func.call(this)});
+            }
+        })
+        return this;
+    }
     setStyleInThisAndChildren( style , value){
         let prop = `_${style}`;
         this._set(prop , style , value);
@@ -137,31 +91,31 @@ export default class StandardComponent extends StyleController{
         })
         return this;
     }
+
     fillHeritage(){
          this.heritage = [{
             parentWidth: this._width,
             parentHeight: this._height,
             parentBackgroundColor: this._backgroundColor,
+            parentZIndex: this._zindex,
         }]
 
     };
-//**************************************************************************** */
-//**************************************************************************** */
-    _heritage(parentHeritage){};                                        /***** */
-                                                                        /***** */
-    _heritageRoutine(component){          /*importante                  /***** */
-        return;                             /*fazer funcionar           /***** */
-        this.fillHeritage();                                            /***** */
-        try{                                                            /***** */
-            component                                                   /***** */
-            ._heritage(this.heritage)                                   /***** */
-        }catch(e){                                                      /***** */
-            return;                                                     /***** */
-        }                                                               /***** */
-    }                                                                   /***** */
-//**************************************************************************** */
-//**************************************************************************** */
- 
+
+    _heritage(parentHeritage){};                                       
+                                                                        
+    _heritageRoutine(component){                       
+
+        this.fillHeritage();           
+        try{                           
+            component                  
+            ._heritage(this.heritage)  
+        }catch(e){                     
+            return;                    
+        }
+                                      
+    }                                  
+
     _isValidChild(child) {
 
         return (
@@ -200,13 +154,13 @@ export default class StandardComponent extends StyleController{
             return false;
         }
 
-        return this.VALID_EVENTS.has(eventType);
+        return VALID_EVENTS.has(eventType);
     }
 
-   _addChild(child) {
+    _addChild(child) {
 
         if(child === this) throw new Error("Self-referencing child nodes are not allowed.")
-        this._heritageRoutine(child);
+    
         if(!this._isChild){
 
             if (
@@ -227,17 +181,45 @@ export default class StandardComponent extends StyleController{
                     "Invalid child object."
                 );
             } 
-
-        
+            
+            child._parentId = this._id;
+            if(child._onHeritage){this._heritageRoutine(child)}
             this._children.push(child);
             child._isChilld = true;
             
-        }else{
-
-            virtualDom(child.release() , this._id);
         }
 
         return this;
+    }
+
+    _addNow(child){
+        
+        this._addChild(child);
+        this.update();
+        return this;
+    }
+
+    _removeChild(childToRemove) {
+
+        if (!childToRemove) {
+            return;
+        }
+       
+        this._children = this._children.filter(
+            child => child !== childToRemove
+        );
+
+        this.update();
+        
+    }
+
+    _addChildren(children = []) {
+
+        children.forEach(child => {
+
+            this._addChild(child);
+
+        });
     }
 
     _jumpToCreateComponent() {
@@ -249,26 +231,52 @@ export default class StandardComponent extends StyleController{
         return this.element;
     }
 
-    
-    release(){
-        return this._jumpToCreateComponent();
-    }
 
+    release(){
+        virtualDom(this._jumpToCreateComponent());
+    }
     update(){
         this.element = null;
-        return this._jumpToCreateComponent();
+        virtualDom(this._jumpToCreateComponent());
+    }
+    suspend(){
+       
+        this.element = null;
+        this.remove() 
+    }
+
+    remove(){
+        try{
+            this.removeVirtualBodyChild(this);
+        }catch(e){
+            console.log(e);
+            try{
+
+                this.removeContentContainerChild(this)
+            }catch(e){
+                console.log(e)
+            }
+        }
+        virtualDom(this._jumpToCreateComponent(), true)
+    }
+    reactivate(){
+        
+        
+        this.update();
+    }
+    reactivatePF(){
+        return ()=>{this.reactivate.call(this)};
     }
 
     createStandardComponent() {
 
         if (this.element) return;
-
+    
         const children =
             this._children.map(
                 child => child._jumpToCreateComponent()
         );
 
-        
         this.element = createVirtualNode(
             this._tag,
             this._styleConfig,
@@ -277,11 +285,11 @@ export default class StandardComponent extends StyleController{
             this._function,
             this._behaviorFunction,
             this._elementCallbacks,
+            this._parentId,
         );
 
         this._setElementReference(this.element);
         if(this._isAutoDisplay) this._autoDisplay(this);
     }
-
     
 }

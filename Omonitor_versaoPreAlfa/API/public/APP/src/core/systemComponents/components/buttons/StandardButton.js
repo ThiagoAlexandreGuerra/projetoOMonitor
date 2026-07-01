@@ -1,4 +1,4 @@
-import StandartComponent from "../../StandardComponent/StandardComponent.js";
+import StandartComponent from "../../standardComponent/main/StandardComponent.js";
 import getId from "../../componentIdentify/componentId/getId.js";
 import hover from "../../componentFunctions/componentsF/button/hover.js";
 
@@ -10,7 +10,7 @@ export default class StandartButton extends StandartComponent{
 
         this._classIdentify = "SDT"
         this._id = getId(this._classIdentify);
-        this._className.push("StandartButton");
+        this._classNName.push("StandartButton");
 
         this._behaviorFunction.push(function(){hover.call(this)});
         this._hoverColor            = "#be000085";
@@ -21,7 +21,7 @@ export default class StandartButton extends StandartComponent{
             height                : "67px",
             backgroundColor       : "#000000",
             backgroundRepeat      : "no-repeat",
-            backgroundSize        : "130% 130%",
+            backgroundSize        : "60px 60px",
             backgroundPosition    : "center",
             borderRadius          : "8px",
             margin                : "5px",

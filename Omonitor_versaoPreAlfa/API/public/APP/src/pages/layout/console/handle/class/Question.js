@@ -14,7 +14,6 @@ export default class Question {
 
     _fillQuestion(question){
 
-        console.log(question.alternativas);
         this._id = question.id;
         this._answerKey = question.gabarito;
         this._questionWording = question.comando;

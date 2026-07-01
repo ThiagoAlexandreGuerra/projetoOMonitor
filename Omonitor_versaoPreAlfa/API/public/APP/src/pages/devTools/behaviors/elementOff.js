@@ -5,4 +5,4 @@ export default function elementOff(elemento) {
 
         elemento.style.display = "none";
     }
-}
+} 

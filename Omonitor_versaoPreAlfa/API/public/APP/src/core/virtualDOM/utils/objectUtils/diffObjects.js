@@ -1,5 +1,10 @@
 export default function diffObjects(past, now) {
 
+    // console.clear()
+    // console.log(`past:  `);
+    // console.log(past);
+    // console.log(`Now:   `);
+    // console.log(now);
     const changes = [];
 
     compare(
@@ -23,6 +28,7 @@ export default function diffObjects(past, now) {
             oldNode?.id ??
             currentNodeId;
 
+            
         if (newNode === undefined) {
 
             changes.push({

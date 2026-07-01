@@ -1,4 +1,4 @@
-export default function replaceElementById(
+export default function replaceObjectById(
     tree,
     id,
     newObject
@@ -29,7 +29,7 @@ export default function replaceElementById(
         }
 
         const found =
-            replaceElementById(
+            replaceObjectById(
                 child,
                 id,
                 newObject

@@ -6,9 +6,9 @@ export default class Text extends StandardBox{
 
     constructor(...paragraphs){
 
-        super();
+        super(true);
         
-        this._className.push("Text");
+        this._classNName.push("Text");
         this._classIdentify = "TXT";
         this._id = getId(this._classIdentify);
 

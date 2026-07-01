@@ -1,4 +1,4 @@
-import ContentAll           from "../../../core/systemComponents/components/boxes/ContentAll.js";
+import VirtualBody           from "../../../core/systemComponents/components/boxes/VirtualBody.js";
 import SideBar              from "../../../core/systemComponents/components/sideBar/SideBar.js";
 import BoxWithCilldBoxes    from "../../../core/systemComponents/components/boxes/BoxWithChildBoxes.js";
 import StandartBox          from "../../../core/systemComponents/components/boxes/StandardBox.js";
@@ -17,7 +17,7 @@ import GetPath              from "../../devTools/services/GetPath.js";
 
 export default function showroom(navigation){
 
-    let contentMain = new ContentAll();
+    let contentMain = new VirtualBody();
     contentMain._addLayoutName("lshowroom");
 
     let animation  = new Animations();

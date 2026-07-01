@@ -1,0 +1,223 @@
+# Projeto: Módulo de Análise Estática de Código (AST Analyzer)
+
+## Objetivo
+
+Desenvolver um módulo de análise estática baseado em AST (Abstract Syntax Tree) para o framework, capaz de compreender o código JavaScript sem executá-lo. O objetivo é substituir análises baseadas em expressões regulares (`Regex`) e `Function.toString()` por uma análise estrutural, confiável e extensível.
+
+A análise deverá utilizar um parser como **@babel/parser**, que converte o código-fonte em uma árvore sintática (AST). A partir dessa árvore, será possível inspecionar qualquer função, componente ou arquivo JavaScript de forma semelhante ao funcionamento interno de frameworks como React, Vue, Angular, Svelte e do compilador TypeScript.
+
+---
+
+## Motivação
+
+Atualmente é possível obter o código de uma função através de `Function.toString()`, porém qualquer tentativa de interpretar esse código utilizando Regex é limitada e sujeita a falhas.
+
+Uma AST representa o código como uma estrutura de objetos organizada em árvore, permitindo identificar exatamente cada elemento da linguagem, como:
+
+* funções;
+* parâmetros;
+* variáveis;
+* classes;
+* objetos;
+* chamadas de métodos;
+* chamadas de funções;
+* loops;
+* condicionais;
+* retornos;
+* imports;
+* exports;
+* expressões;
+* literais.
+
+Essa abordagem elimina ambiguidades e permite construir ferramentas muito mais robustas.
+
+---
+
+## Objetivos da biblioteca
+
+Criar uma API de alto nível capaz de responder perguntas sobre o código, por exemplo:
+
+* Qual o nome da função?
+* Quais são seus parâmetros?
+* Quais variáveis ela declara?
+* Quais componentes ela instancia?
+* Quais métodos são chamados?
+* Qual componente é retornado?
+* Quais imports ela utiliza?
+* Existem componentes nunca utilizados?
+* Quais dependências ela possui?
+* Qual a hierarquia dos componentes criados?
+
+---
+
+## Estrutura pretendida
+
+A biblioteca deverá ser dividida em módulos independentes.
+
+### ASTWalker
+
+Responsável por percorrer toda a árvore sintática.
+
+Funções previstas:
+
+* traverse()
+* walk()
+* find()
+* findFirst()
+* findAll()
+
+---
+
+### NodeQuery
+
+Camada de consulta semelhante ao DOM.
+
+Funções previstas:
+
+* query()
+* queryAll()
+* filter()
+* parents()
+* children()
+* descendants()
+
+---
+
+### FunctionAnalyzer
+
+Classe responsável pela análise de funções.
+
+Métodos previstos:
+
+* getName()
+* getParameters()
+* getParameterCount()
+* getVariables()
+* getConstants()
+* getLets()
+* getVars()
+* getReturns()
+* getMethodCalls()
+* getFunctionCalls()
+* getInstances()
+* getClasses()
+* getStrings()
+* getNumbers()
+* getArrays()
+* getObjects()
+* getLoops()
+* getIfs()
+* getSwitches()
+* getTryCatch()
+* getAssignments()
+* getImports()
+* getExports()
+
+---
+
+### ComponentAnalyzer
+
+Especializado no framework.
+
+Responsabilidades:
+
+* detectar componentes;
+* reconhecer VirtualBody;
+* reconhecer Button;
+* reconhecer Title;
+* reconhecer Image;
+* reconhecer qualquer componente personalizado;
+* identificar eventos;
+* identificar métodos de estilo;
+* reconstruir a hierarquia de componentes;
+* identificar o componente raiz;
+* detectar componentes órfãos;
+* detectar componentes nunca utilizados.
+
+---
+
+## Funcionalidades futuras
+
+Além da inspeção, o módulo deverá permitir modificar o código.
+
+Exemplos:
+
+* adicionar métodos automaticamente;
+* remover chamadas;
+* substituir componentes;
+* renomear variáveis;
+* reconstruir o código-fonte;
+* gerar uma nova AST modificada.
+
+Isso permitirá a criação de ferramentas de transformação automática de código.
+
+---
+
+## Aplicações dentro do framework
+
+Este módulo poderá ser utilizado para:
+
+* Hot Reload;
+* Server-Side Rendering (SSR);
+* otimizações automáticas;
+* geração de documentação;
+* criação de DevTools;
+* inspeção de componentes;
+* validações em tempo de desenvolvimento;
+* geração automática de IDs;
+* detecção de erros de arquitetura;
+* geração de grafos de dependência;
+* análise de performance;
+* lint personalizado;
+* plugins para compilação.
+
+---
+
+## Tecnologias previstas
+
+* @babel/parser
+* @babel/traverse
+* @babel/types
+* @babel/generator
+
+---
+
+## Benefícios
+
+Após concluído, o framework deixará de depender de análises baseadas em texto e passará a compreender estruturalmente o código JavaScript.
+
+Isso permitirá implementar funcionalidades semelhantes às existentes em frameworks modernos, além de fornecer uma base sólida para futuras funcionalidades como compilação, otimização, SSR, geração automática de código e ferramentas avançadas de desenvolvimento.
+
+Em longo prazo, este módulo deverá se tornar um dos principais pilares da arquitetura do framework.
+
+estrutura de diretorio:                                                                                                                                                       
+
+ast/
+│
+├── index.js
+│
+├── FunctionAnalyzer.js
+├── ASTWalker.js
+├── NodeQuery.js
+├── ComponentAnalyzer.js
+│
+├── utils/
+│   ├── traverse.js
+│   ├── visitors.js
+│   ├── predicates.js
+│   └── helpers.js
+│
+├── constants/
+│   └── NodeTypes.js
+│
+├── README.md
+│
+└── examples/
+    ├── basic.js
+    ├── components.js
+    └── virtualDom.js
+
+****************************************************************************************************
+****************************************************************************************************
+
+Sistema de Animações parecido com o motion.dev

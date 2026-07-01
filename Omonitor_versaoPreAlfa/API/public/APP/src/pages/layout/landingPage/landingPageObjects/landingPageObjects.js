@@ -96,3 +96,16 @@ export const txtAboutUs=[
         * Atualizações semanais com novas funcionalidades `   
     }
 ]
+
+export const landingPageBanksInfoText = {
+
+    "text":`
+    O concurso do Banco do Brasil é uma das seleções públicas mais aguardadas do país, oferecendo oportunidades para quem busca estabilidade, desenvolvimento profissional e uma carreira em uma das maiores instituições financeiras da América Latina. As vagas costumam contemplar cargos como Agente Comercial e Agente de Tecnologia, exigindo nível médio ou superior, conforme o edital vigente.
+
+As provas normalmente abrangem disciplinas como Língua Portuguesa, Matemática, Conhecimentos Bancários, Informática, Inglês, Atualidades do Mercado Financeiro e temas específicos da área escolhida. Além da remuneração competitiva, os aprovados contam com benefícios como participação nos lucros, plano de saúde, previdência complementar, auxílio-alimentação e oportunidades de crescimento interno.
+
+Nesta plataforma você encontrará questões, simulados, materiais de apoio e recursos para acompanhar sua evolução, tornando sua preparação mais organizada e eficiente rumo à aprovação.
+
+    
+    `
+}

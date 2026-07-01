@@ -1,6 +1,5 @@
 export default function renderTreeObject(tree) {
 
-    
     const bodyNode = findBody(tree);
 
     if (!bodyNode) {

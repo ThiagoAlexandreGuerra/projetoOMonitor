@@ -1,5 +1,5 @@
-import StandardComponent from "../../standardComponent/standardComponent.js"
-import getId from "../../componentIdentify/componentId/getId.js";
+import StandardComponent    from "../../standardComponent/main/StandardComponent.js";
+import getId                from "../../componentIdentify/componentId/getId.js";
 
 export default class Anchor extends StandardComponent{
 
@@ -7,7 +7,7 @@ export default class Anchor extends StandardComponent{
 
         super("a");
 
-        this._className.push("Anchor");
+        this._classNName.push("Anchor");
         this._classIdentify = "ACH";
         this._id = getId(this._classIdentify);
 

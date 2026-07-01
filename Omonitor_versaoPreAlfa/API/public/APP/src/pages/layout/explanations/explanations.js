@@ -1,4 +1,4 @@
-import ContentAll from "../../../core/systemComponents/components/boxes/ContentAll.js";
+import VirtualBody from "../../../core/systemComponents/components/boxes/VirtualBody.js";
 import Title from "../../../core/systemComponents/components/title/Title.js";
 import { virtualDom } from "../../../core/virtualDOM/main/virtualDom.js";
 import SideBar from "../../../core/systemComponents/components/sideBar/SideBar.js";
@@ -13,7 +13,7 @@ import GetPath from "../../devTools/services/GetPath.js";
 
 export default function explanations(navigation){
 
-    const contentMain = new ContentAll();
+    const contentMain = new VirtualBody();
     const installButton = new AppInstallButton();
     
         contentMain._addLayoutName("lexplanations");

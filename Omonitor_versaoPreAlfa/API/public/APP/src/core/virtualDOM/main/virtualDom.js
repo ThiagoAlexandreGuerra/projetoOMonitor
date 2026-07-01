@@ -1,72 +1,182 @@
-import DOMToObject          from "../getDOM/DOMToObject.js";
-import findNode             from "../utils/search/findNode.js";
-import thisAppendChild      from "../utils/objectUtils/appendChildToThis.js";
-import diffObjects          from "../utils/objectUtils/diffObjects.js";
-import findElementById      from "../utils/search/findById.js";
-import renderTreeObjects    from "../../render/renders/renderTreeObject.js";
-import render               from "../../render/main/render.js";
-import removeFunctions      from "../functionHandlers/removeFunctionReferences.js";
-import removeNodeById       from "../utils/objectUtils/removeNodeById.js";
-import { registerNode , unregisterNode , NODE_INDEX } from "../utils/registry/registry.js";
+import DOMToObject from "../getDOM/DOMToObject.js";
+import findNode from "../utils/search/findNode.js";
+import thisAppendChild from "../utils/objectUtils/appendChildToThis.js";
+import diffObjects from "../utils/objectUtils/diffObjects.js";
+import findElementById from "../utils/search/findById.js";
+import render from "../../render/main/render.js";
+import removeFunctions from "../functionHandlers/removeFunctionReferences.js";
+import removeNodeById from "../utils/objectUtils/removeNodeById.js";
+import precisionDiff from "../utils/objectUtils/precisionDiff.js";
+import replaceObjectById from "../utils/replacement/replaceObjectById.js";
+import findNodesByPrefix from "../utils/objectUtils/findNodesByPrefix.js";
+import {
+    registerNode,
+    unregisterNode,
+    NODE_INDEX
+}
+from "../utils/registry/registry.js";
 
-let PAST = null;
 let NOW = null;
-
 let INITIALIZED = false;
+
+function initialize() {
+
+    if (INITIALIZED) {
+        return;
+    }
+
+    INITIALIZED = true;
+
+    NOW = structuredClone(
+        DOMToObject(
+            document.documentElement
+        )
+    );
+}
+
+function snapshot() {
+
+    return structuredClone(
+        removeFunctions(NOW)
+    );
+}
+
+function commit(past) {
+
+    const diff =
+        diffObjects(
+            past,
+            NOW
+        );
+    
+    render(diff);
+
+    return diff;
+}
+
+function getBody() {
+
+    const body =
+        findNode(
+            NOW,
+            node => node.tag === "body"
+        );
+
+    if (!body) {
+        throw new Error(
+            "Body element not found."
+        );
+    }
+
+    return body;
+}
 
 export function virtualDom(
     child,
-    parentId = ""
+    remove = false
 ) {
    
-    if (!child) return;
+    if (!child) {
+        return;
+    }
+    if(remove){
+        removeNode(child)
+        return;
+    }else if(!child.id.includes(`VTB`)){
+        updateNode(child)
+        return;
+    }else{
+        
+        if(findNodesByPrefix(NOW, ['VTB'])[0]){
+            let NodeToDelete = findNodesByPrefix(NOW, ['VTB']);
+            NodeToDelete.forEach((node)=>{
+                virtualDomRemoveNodeById(node.id , false);
+            })
+        }
+        initialize();
+        
+        const past = snapshot();
+        
+        const parent =
+        child.parentId
+        ? findElementById(
+                NOW,
+                child.parentId
+              )
+            : getBody();
+        
+            console.log(`parent:    `)
+            console.log(parent)
+    if (!parent) {
+        throw new Error(
+            `Parent with id "${child.parentId}" not found.`
+        );
+    }
 
-    if (parentId === "") {
+    thisAppendChild(
+        parent,
+        child
+    );
 
-        parentDontExist(child);
-
-    } else {
-
-        parentExist(child, parentId);
+    registerNode(NOW);
+    
+    return commit(past);
     }
 }
 
-export function updateVirtualDom(
-    newObject
-) {
-   
-    if (!newObject) {
+function updateNode(node){
 
+    const past = snapshot();
+
+    parent = findElementById(NOW, node.parentId);
+
+    replaceObjectById(NOW, node.id , node);
+
+    const diff = precisionDiff(past,NOW);
+    render(diff)
+}
+
+function removeNode(node){
+
+    virtualDomRemoveNodeById(node.id)
+
+}
+
+export function updateVirtualDom(
+    update
+) {
+    
+    if (!update) {
         throw new Error(
             "Invalid object."
         );
     }
 
-    const id =
-        newObject.id;
- 
+    initialize();
+    
     const record =
-        NODE_INDEX.get(id);
-    
-    
+        NODE_INDEX.get(update.id);
+
     if (!record) {
-
-        return;
+        return null;
     }
 
-    PAST =
-        structuredClone(removeFunctions(NOW));
+    const past = snapshot();
 
-    const nodeObj =
-    findElementById(
-        NOW,
-        newObject.id
-    );
+    const node =
+        findElementById(
+            NOW,
+            update.id
+        );
 
-    if(newObject.value) {
-        nodeObj.styles[newObject.typeProp] = newObject.value;    
-        newObject = nodeObj;
+    if (!node) {
+        return null;
     }
+
+    node.styles[
+        update.typeProp
+    ] = update.value;
+
     const {
         parent,
         index
@@ -75,8 +185,8 @@ export function updateVirtualDom(
     if (!parent) {
 
         unregisterNode(NOW);
-       
-        NOW = newObject;
+
+        NOW = node;
 
         registerNode(NOW);
 
@@ -86,133 +196,37 @@ export function updateVirtualDom(
             parent.children[index]
         );
 
-        newObject.parent =
+        node.parent =
             parent;
 
-           
         parent.children[index] =
-            newObject;
+            node;
 
         registerNode(
-            newObject,
+            node,
             parent,
             index
         );
-
     }
-   
-    const DIFF =
-        diffObjects(
-            PAST,
-            NOW
-        );
 
-    render(DIFF);
-    
-    return DIFF;
+    return queueMicrotask(()=>commit(past));
 }
 
-function parentExist(child, parentId) {
+export function virtualDomRemoveNodeById(
+    targetId , isComitResult = true
+) {
 
-    if (!INITIALIZED) {
+    initialize();
 
-        INITIALIZED = true;
-
-        NOW =
-            DOMToObject(
-                document.documentElement
-            );
-    }
-
-    PAST =
-        structuredClone(removeFunctions(NOW));
-
-    const parent =
-        findElementById(
-            NOW,
-            parentId
-        );
- 
-    if (!parent) {
-
-        throw new Error(
-            `Parent with id "${parentId}" not found.`
-        );
-    }
-
-    thisAppendChild(
-        parent,
-        child
-    );
-
-    registerNode(NOW);
-   
-    const DIFF =
-        diffObjects(
-            PAST,
-            NOW
-        );
-
-    render(DIFF);
+    const past = snapshot();
     
-    return DIFF;
-}
-
-
-function parentDontExist(child) {
-
-    
-    if (!INITIALIZED) {
-
-        INITIALIZED = true;
-
-        const INITIALDOM =
-            DOMToObject(
-                document.documentElement
-            );
-    
-        NOW =
-            structuredClone(
-                INITIALDOM
-            );
-     
-    }
-
-    PAST =
-        structuredClone(removeFunctions(NOW));
-
-    const body =
-        findNode(
-            NOW,
-            node => node.tag === "body"
-        );
-
-    if (!body) {
-
-        throw new Error(
-            "Body element not found."
-        );
-    }
-
-    thisAppendChild(
-        body,
-        child
+    removeNodeById(
+        NOW,
+        targetId
     );
 
     registerNode(NOW);
 
-    const DIFF =
-        diffObjects(
-            PAST, 
-            NOW
-        );
- 
-    render(NOW);
-
-    return DIFF;
+    return !isComitResult || commit(past);
 }
 
-export function virtualDomRemoveNodeById(targetId){
-
-    removeNodeById(NOW , targetId)
-}

@@ -1,5 +1,5 @@
 import getId from "../../componentIdentify/componentId/getId.js";
-import StandardComponent from "../../standardComponent/standardComponent.js";
+import StandardComponent from "../../standardComponent/main/StandardComponent.js";
 import Title from "../title/Title.js";
 import TextEditFunction from "../../utils/text/TextEditingFunction.js";
 import BoxWithChildBoxes from "../boxes/BoxWithChildBoxes.js";
@@ -15,7 +15,7 @@ export default class Paragraph extends BoxWithChildBoxes {
 
         super(3);
 
-        this._className.push("Paragraph");
+        this._classNName.push("Paragraph");
         this._classIdentify = "PGH";
         this._id = getId(this._classIdentify);
 

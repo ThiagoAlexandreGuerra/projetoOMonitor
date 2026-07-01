@@ -6,21 +6,21 @@ export default class BoxWithChildBoxes extends StandartBox {
     constructor(
         hasChildren = 1,
         layout = "vertical",
-        isChild = false,
+        onHeritage = false
     ) {
 
-        super();
+        super(onHeritage);
 
         this._validateInput(
             hasChildren,
-            isChild,
+            onHeritage,
             layout
         );
 
         this._classIdentify = "BWC";
         this._id = getId(this._classIdentify);
 
-        this._className.push("BoxWithChildBoxes");
+        this._classNName.push("BoxWithChildBoxes");
 
         this._hasChildren = hasChildren;
         this._layout = layout;
@@ -47,14 +47,13 @@ export default class BoxWithChildBoxes extends StandartBox {
 
         this._configureLayout();
         this._addSubChildren();
-        this._removeScrollbarConfig()
 
         this.BWCComponents = this._children;
     }
 
     _validateInput(
         hasChildren,
-        isChild,
+        onHeritage,
         layout
     ) {
 
@@ -70,9 +69,9 @@ export default class BoxWithChildBoxes extends StandartBox {
             );
         }
 
-        if (typeof isChild !== "boolean") {
+        if (typeof onHeritage !== "boolean") {
             throw new TypeError(
-                "isChild must be a boolean."
+                "onHeritage must be a boolean."
             );
         }
 
@@ -100,9 +99,12 @@ export default class BoxWithChildBoxes extends StandartBox {
     BWCResizeWidth(value){
 
         this.setWidth(value);
-        this._son?.setWidth(`${(this.getWidth()/this._hasChildren)*this._sizeParentElementComparedToChildElement}px`);
-        this._grandson?.setWidth(`${(this.getWidth()/this._hasChildren)*this._sizeParentElementComparedToChildElement}px`);
-        this._greatGrandson?.setWidth(`${(this.getWidth()/this._hasChildren)*this._sizeParentElementComparedToChildElement}px`);
+       
+        const newWidth = `${(this.getWidth()/this._hasChildren)*this._sizeParentElementComparedToChildElement}px`;
+    
+        this._son?.setWidth(newWidth);
+        this._grandson?.setWidth(newWidth);
+        this._greatGrandson?.setWidth(newWidth);
 
         return this;
     }

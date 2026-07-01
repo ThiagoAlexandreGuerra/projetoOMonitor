@@ -5,7 +5,8 @@ export default function createVirtualNode(
     children = [],
     functions = null,
     behaviorFunction = [],
-    addEventListenerFunction = []
+    addEventListenerFunction = [],
+    parentId_=""
 ) {
 
     
@@ -42,9 +43,9 @@ export default function createVirtualNode(
                 ? children
                 : [children],
 
-        haveParent: false,
+        haveParent: parentId_?true:false,
 
-        parent: null,
+        parentId: parentId_,
 
         elementFunctions: functions,
 

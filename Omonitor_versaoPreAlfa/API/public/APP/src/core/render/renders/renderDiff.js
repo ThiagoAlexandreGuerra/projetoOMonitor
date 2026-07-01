@@ -1,6 +1,7 @@
 
 export default function renderDiff(diffs = []) {
 
+   
     if (!Array.isArray(diffs)) {
         throw new Error(
             "Diffs must be an array."

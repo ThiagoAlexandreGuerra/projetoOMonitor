@@ -15,11 +15,14 @@ const neurology_24dp_FFFFFF         = "neurology_24dp_FFFFFF.svg";
 const school_24dp_FFFFFF            = "school_24dp_FFFFFF.svg";
 const arrow_back_ios_40dp_F0C800    = "arrow_back_ios_40dp_F0C800.svg";
 const arrow_forward_ios_40dp_F0C800 = "arrow_forward_ios_40dp_F0C800.svg";
+const drag_indicator_24dp_FFFFFF    = "drag_indicator_24dp_FFFFFF.svg";
+const play_arrow_24dp_FFFFFF        = "play_arrow_24dp_FFFFFF.svg" 
 
 const lotusLogo                  = "lotusLogo.png";
 const monitorLogo                = "monitorLogo.png";
 const mascoteLogo                = "mascoteLogo.png";
 const chevronForward_png_A6A6A6  = "chevronForward_png_A6A6A6.png";
+const bancoDoBrasilBackground    = "bancoDoBrasilBackground.png";
 export default class GetPath {
 
     constructor() {
@@ -145,4 +148,15 @@ export default class GetPath {
         return `url(${this._pathFolderIcons + arrow_forward_ios_40dp_F0C800})`; 
     }    
 
+    getDrag_indicator_24dp_FFFFFF(){
+        return `url(${this._pathFolderIcons + drag_indicator_24dp_FFFFFF})`;
+    }
+
+    getBancoDoBrasilBackground(){
+        return `url(${this._pathFolderImages + bancoDoBrasilBackground})`
+    }
+
+    getPlay_arrow_24dp_FFFFFF(){
+        return `url(${this._pathFolderIcons + play_arrow_24dp_FFFFFF})`
+    }
 }

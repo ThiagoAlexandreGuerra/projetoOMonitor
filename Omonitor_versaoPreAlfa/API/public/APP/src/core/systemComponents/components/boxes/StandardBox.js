@@ -1,17 +1,17 @@
 import getId from "../../componentIdentify/componentId/getId.js";
-import StandartComponent from "../../StandardComponent/StandardComponent.js";
+import StandartComponent from "../../standardComponent/main/StandardComponent.js";
 
 export default class StandardBox extends StandartComponent{
 
-    constructor(isAbleToMove = false){
+    constructor(onHeritage=false){
 
         super();
 
-        this._className.push("StandartBox");
+        this._onHeritage    = onHeritage;
+        this._classNName.push("StandartBox");
         this._classIdentify = "SDB";
-        this._id = getId(this._classIdentify);
+        this._id            = getId(this._classIdentify);
 
-        this._isAbleToMove = isAbleToMove;
         this._updateStyleConfig({
 
             alignItems            : "center",
@@ -21,14 +21,14 @@ export default class StandardBox extends StandartComponent{
             borderRight           : "2px solid white",
             backgroundRepeat      : "no-repeat",
             backgroundPosition    : "center",
-            backgroundSize        : "50px 50px",
+            backgroundSize        : "100% 100%",
             color                 : "#dadada",
             display               : "flex",
             flexDirection         : "column",
             justifyContent        : "center",
             marginBottom          : "20px",
             marginTop             : "10px",
-            overflow              : "auto",
+            overflowY             : "hidden",
             overflowX             : "hidden",
             padding               : "10px",
             position              : "relative",
@@ -48,22 +48,30 @@ export default class StandardBox extends StandartComponent{
         
     }
 
-    //fazer funcionar
     _heritage(parentHeritage){
-        return;
+        
         parentHeritage?.parentWidth == "auto"   || this.setWidth(parentHeritage?.parentWidth);
         parentHeritage?.parentHeight == "auto"  || this.setHeight(parentHeritage?.parentHeight);
-        this.setBackgroundColor(parentHeritage.parentBackgroundColor);
+        this.setZIndex(parentHeritage?.parentZIndex);   
+        this.setBackgroundColor(parentHeritage?.parentBackgroundColor);
     }
 
     _removeScrollbarConfig(){
     
         this._updateStyleConfig({
             height      : "auto",
-            minHeight   : this.getHeightPX(),
             overflow    : "",
             overflowY   : "hidden",
 
+        })
+
+        return this;
+    }
+
+    _addScrollbarConfig(){
+        this._updateStyleConfig({
+            height      : this.getHeightPX() != "auto"? this.getHeightPX(): "300px",
+            overflowY   : "scroll"
         })
 
         return this;
@@ -87,5 +95,4 @@ export default class StandardBox extends StandartComponent{
         return this;
     }
 
-    
 }

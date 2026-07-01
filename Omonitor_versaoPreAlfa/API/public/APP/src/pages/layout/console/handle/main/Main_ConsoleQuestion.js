@@ -14,7 +14,6 @@ export default class Main_ConsoleQuestion{
     main(apiResponse){
 
         this._thisApiResponseQuestions = [];
-        console.log(apiResponse.data);
 
         apiResponse.data.forEach(question => {
             if(!(this._questionCache.has(question.id))){
@@ -26,7 +25,7 @@ export default class Main_ConsoleQuestion{
     }
 
     addApiResponse(apiResponse = null){
-        console.log(apiResponse);
+        
         if(isValidApiResponse(apiResponse)) return;
         this.main(apiResponse);
     }

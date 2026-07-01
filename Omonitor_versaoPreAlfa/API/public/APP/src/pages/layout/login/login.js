@@ -1,4 +1,4 @@
-import ContentAll           from "../../../core/systemComponents/components/boxes/ContentAll.js";
+import VirtualBody           from "../../../core/systemComponents/components/boxes/VirtualBody.js";
 import BoxWithCilldBoxes    from "../../../core/systemComponents/components/boxes/BoxWithChildBoxes.js";
 import StandartBox          from "../../../core/systemComponents/components/boxes/StandardBox.js";
 import ClickEventButton     from "../../../core/systemComponents/components/buttons/clickEventButton.js";
@@ -13,7 +13,7 @@ import Sidebar from "../../../core/systemComponents/components/sideBar/SideBar.j
 
 export default function login(navigation){
 
-    let contentMain = new ContentAll()
+    let contentMain = new VirtualBody()
         ._addLayoutName("lLogin")
         .setBackgroundColor("black")
     

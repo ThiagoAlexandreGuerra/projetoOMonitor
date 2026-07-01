@@ -11,7 +11,7 @@ export default class AnchorButton extends StandardButton{
         this._classIdentify = "ACB";
         this._id = getId(this._classIdentify);
         
-        this._className.push("AnchorButton");
+        this._classNName.push("AnchorButton");
         
         this._propertyConfig = {
 

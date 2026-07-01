@@ -1,6 +1,6 @@
-import StandardComponent from "../../standardComponent/standardComponent.js";
-import AnchorButton from "../buttons/AnchorButton.js";
-import getId from "../../componentIdentify/componentId/getId.js";
+import StandardComponent from "../../standardComponent/main/StandardComponent.js";
+import AnchorButton      from "../buttons/AnchorButton.js";
+import getId             from "../../componentIdentify/componentId/getId.js";
 
 
 export default class AnchorLinkHorizontal extends StandardComponent{
@@ -10,7 +10,7 @@ export default class AnchorLinkHorizontal extends StandardComponent{
         super();
                
 
-                this._className.push("ALH");
+                this._classNName.push("ALH");
                 this._classIdentify = "AnchorLinkHorizontal";
                 this._id = getId(this._classIdentify);
         

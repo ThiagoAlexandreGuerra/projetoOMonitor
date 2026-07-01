@@ -1,12 +1,12 @@
-import StandartBox from "../boxes/StandardBox.js";
+import StandardBox from "../boxes/StandardBox.js";
 import getId from "../../componentIdentify/componentId/getId.js";
 
-export default class StandartCircle extends StandartBox{
+export default class StandardCircle extends StandardBox{
 
     constructor(){
         super();
 
-        this._className.push("StandartCircle");
+        this._classNName.push("StandartCircle");
         this._classIdentify = "SDC";
         this._id = getId(this._classIdentify);
                 
@@ -15,8 +15,18 @@ export default class StandartCircle extends StandartBox{
         })
 
         this._updatePropertyConfig({
-            id: this.id,
+            id: this._id,
             className: this.getElementClassNames()
         })
+
+    }
+
+    setCenterCircle(){
+        this.setPosition("absolute")
+        this.setLeft("50%")
+        this.setTop("50%")
+        this.setTransform("translate(-50%, -50%)")
+
+        return this;
     }
 }

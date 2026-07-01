@@ -9,7 +9,7 @@ export default class TextWithAnchors extends StandardBox{
 
         super();
         
-        this._className.push("TWA");
+        this._classNName.push("TWA");
         this._classIdentify = "TextWithAnchors";
         this._id = getId(this._classIdentify);
 

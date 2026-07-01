@@ -3,8 +3,7 @@ export default class QuestionCache {
     #cache = new Map();
 
     has(id){
-        console.log(id);
-        console.log(this.#cache);
+       
         return this.#cache.has(id);
     }
 

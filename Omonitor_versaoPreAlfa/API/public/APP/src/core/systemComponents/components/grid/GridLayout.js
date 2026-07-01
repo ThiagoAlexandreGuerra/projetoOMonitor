@@ -1,6 +1,6 @@
 import StandartBox from "../boxes/StandardBox.js";
 import getId from "../../componentIdentify/componentId/getId.js";
-import StandartComponent from "../../StandardComponent/StandardComponent.js";
+import StandartComponent from "../../standardComponent/main/StandardComponent.js";
 
 export default class GridLayout extends StandartBox {
 
@@ -11,7 +11,7 @@ export default class GridLayout extends StandartBox {
         this._cardAmount = cardAmount;
         this._columns = columns;
 
-        this._className.push("CardGrid");
+        this._classNName.push("CardGrid");
         this._classIdentify = "CDG";
         this._id = getId(this._classIdentify);
 

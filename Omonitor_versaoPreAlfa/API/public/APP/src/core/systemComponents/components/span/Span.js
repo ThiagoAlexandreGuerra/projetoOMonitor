@@ -9,7 +9,7 @@ export default class Span extends StandartComponent{
         this._classIdentify = "SPA";
         this._id = getId(this._classIdentify);
 
-        this._className.push("Span");
+        this._classNName.push("Span");
 
         
         this._addStyleConfig({
