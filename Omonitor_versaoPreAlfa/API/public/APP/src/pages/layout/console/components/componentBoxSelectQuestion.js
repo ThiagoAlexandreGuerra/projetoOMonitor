@@ -1,12 +1,12 @@
 import BoxWithCilldBoxes    from "../../../../core/systemComponents/components/boxes/BoxWithChildBoxes.js";
 import StandartBox          from "../../../../core/systemComponents/components/boxes/StandardBox.js";
-import ClickEventButton     from "../../../../core/systemComponents/components/buttons/clickEventButton.js";
+import ClickEventButton     from "../../../../core/systemComponents/components/buttons/ClickEventButton.js";
 import Title                from "../../../../core/systemComponents/components/title/Title.js";
 import GetPath              from "../../../devTools/services/GetPath.js";
 import apiGet               from "../../../devTools/api/apiGet.js";
 import hoverForClasses      from "../../landingPage/landingPageFunctions/hoverForClasses.js";
 import PACKAGE              from "../../../../core/systemComponents/components/boxes/PACKGE.js";
-import ExternalFonts        from "../../../../core/systemComponents/utils/text/externalFonts.js";
+import ExternalFonts        from "../../../../core/systemComponents/utils/text/ExternalFonts.js";
 import Slide from "../../../../core/systemComponents/components/slide/Slide.js";
 
 export default function componentBoxSelectQuestion(catalog, onDisplayConsole ){

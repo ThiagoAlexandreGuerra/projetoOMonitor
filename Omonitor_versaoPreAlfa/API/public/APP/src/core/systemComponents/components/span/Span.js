@@ -1,4 +1,4 @@
-import StandartComponent from "../../standartComponent/StandartComponent.js";
+import StandartComponent from "../../standardComponent/main/StandardComponent.js";
 import getId from "../../componentIdentify/componentId/getId.js";
 
 export default class Span extends StandartComponent{

@@ -1,5 +1,5 @@
 import StandardBox from "../../../../core/systemComponents/components/boxes/StandardBox.js";
-import ClickEventButton from "../../../../core/systemComponents/components/buttons/clickEventButton.js";
+import ClickEventButton from "../../../../core/systemComponents/components/buttons/ClickEventButton.js";
 import landingPageBanks from "./landingPageBanks.js";
 export default  function contentExplanations(navigation){ 
     

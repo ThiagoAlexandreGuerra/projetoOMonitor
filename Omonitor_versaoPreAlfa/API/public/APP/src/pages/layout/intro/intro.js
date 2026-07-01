@@ -1,6 +1,6 @@
 import {virtualDom} from "../../../core/virtualDOM/main/virtualDom.js";
-import SideBar from "../../../core/systemComponents/components/sideBar/SideBar.js";
-import clickEventButton from "../../../core/systemComponents/components/buttons/clickEventButton.js";
+import SideBar from "../../../core/systemComponents/components/sidebar/Sidebar.js";
+import clickEventButton from "../../../core/systemComponents/components/buttons/ClickEventButton.js";
 import StandartBox from "../../../core/systemComponents/components/boxes/StandardBox.js";
 import VirtualBody from "../../../core/systemComponents/components/boxes/VirtualBody.js";
 import GetPath from "../../devTools/services/GetPath.js";
@@ -30,4 +30,3 @@ export default function intro(navigation){
          navigation._setNextLayoutClass("landingPage");
     }
 }
-

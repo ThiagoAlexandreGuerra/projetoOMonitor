@@ -1,6 +1,6 @@
-import elementOff from "../../../../utils/behaviors/elementOff.js";
-import elementOn  from "../../../../utils/behaviors/elementOn.js";
-import tooggleVisibility from "../../../../utils/behaviors/tooggleVisibility.js"
+import elementOff from "../../../../utils/behavior/elementOff.js";
+import elementOn  from "../../../../utils/behavior/elementOn.js";
+import tooggleVisibility from "../../../../utils/behavior/toggleVisibility.js"
 
 export default class EnableVisibility{
 

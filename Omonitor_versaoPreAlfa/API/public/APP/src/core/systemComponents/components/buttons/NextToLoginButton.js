@@ -1,4 +1,4 @@
-import ClickEventButton from "./clickEventButton.js";
+import ClickEventButton from "./ClickEventButton.js";
 import StandardBox from "../boxes/StandardBox.js";
 import GetPath from "../../../../pages/devTools/services/GetPath.js";
 import StandartCircle from "../circles/StandardCircle.js";

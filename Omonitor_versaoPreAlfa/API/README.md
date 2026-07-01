@@ -1,58 +1,213 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Inicialização do Projeto
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto utiliza o **Laravel** como servidor HTTP e backend, enquanto toda a interface da aplicação é desenvolvida utilizando o **Lotus**, um framework próprio escrito inteiramente em JavaScript puro (Vanilla JavaScript).
 
-## About Laravel
+O Laravel é responsável pelo servidor, APIs e recursos do backend. O Lotus é responsável pela construção da interface, gerenciamento do Virtual DOM, componentes, navegação e lógica da aplicação no cliente.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Pré-requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Antes de iniciar o projeto, certifique-se de possuir instalado:
 
-## Learning Laravel
+* PHP 8.2 ou superior
+* Composer
+* Node.js 20 ou superior
+* NPM
+* MySQL (ou outro banco compatível com o Laravel)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Instalação
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Clone o repositório:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone git@github.com:ThiagoAlexandreGuerra/projetoOMonitor.git
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Entre na pasta do projeto:
 
-## Contributing
+```bash
+cd <nome-do-projeto>/Omonitor_versao_PreAlfa/API
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Instale as dependências do Laravel:
 
-## Code of Conduct
+```bash
+composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Instale as dependências JavaScript:
 
-## Security Vulnerabilities
+```bash
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Copie o arquivo de configuração:
 
-## License
+```bash
+cp .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+No Windows:
+
+```bash
+copy .env.example .env
+```
+
+Gere a chave da aplicação:
+
+```bash
+php artisan key:generate
+```
+
+Configure as informações do banco de dados no arquivo `.env`.
+
+Execute as migrations:
+
+```bash
+php artisan migrate
+```
+
+Caso existam seeders:
+
+```bash
+php artisan db:seed
+```
+
+---
+
+# Iniciando o servidor
+
+Inicie o servidor do Laravel:
+
+```bash
+php artisan serve
+```
+
+Por padrão, a aplicação ficará disponível em:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+# Estrutura do projeto
+
+```
+app/
+bootstrap/
+config/
+database/
+public/
+│
+├── APP/
+│   ├── globalStyle/
+│   ├── src/
+│   │   ├── core/
+│   │   ├── pages/
+│   │   └── ...
+│   │   
+│   │  
+│   │
+│   └── manifest.webmanifest
+│
+resources/
+routes/
+storage/
+```
+
+---
+
+# Como funciona
+
+O navegador carrega diretamente o ponto de entrada do Lotus:
+
+```html
+<script type="module" src="./APP/src/core/main/main.js"></script>
+```
+
+A partir desse arquivo, todo o framework Lotus é inicializado e a aplicação passa a ser controlada pelo Virtual DOM e pelos componentes do próprio framework.
+
+O Laravel atua apenas como servidor da aplicação e provedor das APIs.
+
+---
+
+# Desenvolvimento
+
+Sempre que alterar arquivos JavaScript do Lotus, basta atualizar a página no navegador.
+
+Como o framework utiliza módulos ES (`import` e `export`), não é necessário realizar etapas adicionais de compilação para o código do Lotus.
+
+---
+
+# Backend
+
+As APIs devem ser criadas normalmente utilizando os recursos do Laravel.
+
+Exemplo:
+
+```
+routes/api.php
+```
+
+Controllers:
+
+```
+app/Http/Controllers
+```
+
+Models:
+
+```
+app/Models
+```
+
+O Lotus pode consumir essas APIs utilizando `fetch()` ou qualquer camada de comunicação implementada no framework.
+
+---
+
+# Lotus Framework
+
+O Lotus é um framework de interface desenvolvido em JavaScript vanilla, sem dependência de React, Vue ou Angular.
+
+Entre suas principais características estão:
+
+* Virtual DOM próprio;
+* sistema de componentes;
+* navegação entre layouts;
+* gerenciamento de eventos;
+* renderização dinâmica;
+* arquitetura modular;
+* suporte a PWA;
+* integração com APIs Laravel.
+
+---
+
+# Observações
+
+* O Lotus é carregado diretamente pelo navegador utilizando módulos ES.
+* O Laravel é utilizado exclusivamente como backend e servidor da aplicação.
+* Alterações no backend podem exigir reinicialização do servidor Laravel.
+* Alterações no frontend normalmente requerem apenas atualizar a página no navegador.
+
+---
+
+# Executando o projeto
+
+1. Inicie o banco de dados.
+2. Execute o servidor Laravel:
+
+```bash
+php artisan serve
+```
+
+3. Abra o navegador em:
+
+```
+http://127.0.0.1:8000
+```
+
+A aplicação será carregada automaticamente, inicializando o Lotus e renderizando toda a interface da aplicação.

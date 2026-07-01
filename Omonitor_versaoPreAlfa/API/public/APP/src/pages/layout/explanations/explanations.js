@@ -1,8 +1,8 @@
 import VirtualBody from "../../../core/systemComponents/components/boxes/VirtualBody.js";
 import Title from "../../../core/systemComponents/components/title/Title.js";
 import { virtualDom } from "../../../core/virtualDOM/main/virtualDom.js";
-import SideBar from "../../../core/systemComponents/components/sideBar/SideBar.js";
-import ClickEventButton from "../../../core/systemComponents/components/buttons/clickEventButton.js";
+import SideBar from "../../../core/systemComponents/components/sidebar/Sidebar.js";
+import ClickEventButton from "../../../core/systemComponents/components/buttons/ClickEventButton.js";
 import AppInstallButton from "../../../core/PWA/src/installRoutine/AppInstallButton.js";
 import Text from "../../../core/systemComponents/components/text/Text.js";
 import Paragraph from "../../../core/systemComponents/components/paragraph/Paragraph.js";
