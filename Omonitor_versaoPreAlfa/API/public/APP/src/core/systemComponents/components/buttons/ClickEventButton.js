@@ -11,7 +11,7 @@ export default class ClickEventButton extends StandartButton {
     this._id = getId(this._classIdentify);
 
     functions = functions.flat(Infinity);
-
+   
     this._function = this._function.concat(
         functions.map(fn => () => fn())
     );

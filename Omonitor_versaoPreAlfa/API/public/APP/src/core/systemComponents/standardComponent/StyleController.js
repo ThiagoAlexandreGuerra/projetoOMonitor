@@ -1,5 +1,6 @@
 import JoinLayers from "./JoinLayers.js";
-
+import Size from "../responsiveness/Size.js";
+import getCaller from "../../utils/getters/getCaller.js";
 export default class StyleController extends JoinLayers{
     
     constructor(...args) {
@@ -40,7 +41,7 @@ export default class StyleController extends JoinLayers{
     getMinWidth()               { return this._minWidth; }
     getMinHeight()              { return this._minHeight; }
     getZIndex()                 { return this._zIndex;    }
-    getFontSize()               { return this._fontSize;}
+    getFontSize()               { return parseFloat(this._fontSize || this._styleConfig.fontSize);}
     getBackgroundImage()        { return this._backgroundImage; }
     getBackgroundRepeat()       { return this._backgroundRepeat; }
     getBackgroundPosition()     { return this._backgroundPosition; }
@@ -78,29 +79,27 @@ export default class StyleController extends JoinLayers{
     getMask()                   { return this._mask;}
     getHeight(){
         try{
-            const height = parseFloat(this._styleConfig.height.replace("px", "") || this._height);
-            return height;
+            return Size.toPx(this._styleConfig.height || this._height , this.getId() , true)
         }catch(e){
            console.warn(`the method getHeight for this componet is not able yet, component` [{component:this , error: e}]);
         }
     }
     getWidth(){
         try{
-            const width = parseFloat(this._styleConfig.width.replace("px", "") || this._width);
-            return width;
+            return Size.toPx(this._styleConfig.width || this._width , this.getId())
         }catch(e){
            console.warn(`the method getWidth for this componet is not able yet, component ${[{component:this , error: e}]}`);
         }
     }
+  
     getTop(){
-        const top = parseFloat(this._styleConfig.top.replace("px", ""));
+        const top = parseFloat(this._styleConfig.top.replace("px", "")|| this._top );
         return top;
     }
     getBottom(){
-        const bottom = parseFloat(this._styleConfig.bottom.replace("px", ""));
+        const bottom = parseFloat(this._styleConfig.bottom.replace("px", "") || this._bottom);
         return bottom;
     }
-
 
     setWidth(value)                { this._set("_width",           "width",            value);return this;}
     setHeight(value)               { this._set("_height",          "height",           value);return this;}

@@ -1,6 +1,6 @@
 import {updateVirtualDom} from "../../virtualDOM/main/virtualDom.js";
 import autoDisplay from "../utils/auto/autoDisplay.js";
-import getCaller from "../utils/getters/getCaller.js";
+import getCaller from "../../utils/getters/getCaller.js";
 
 export const StyleLayer = base => class extends base {
     
@@ -98,6 +98,9 @@ export const StyleLayer = base => class extends base {
         this._innerHTML             = "";
         this._mask                  = "";
         this._clipPath              = "";
+        
+        this._componentHeightResponsivenessFactors  = [{factor:1 , windowSize: "any"}];
+        this._componentWidthResponsivenessFactors   = [{factor:1 , windowSize: "any"}];
     }
 
 
@@ -302,5 +305,4 @@ export const StyleLayer = base => class extends base {
         autoDisplay(element);
     }
 
-   
 }

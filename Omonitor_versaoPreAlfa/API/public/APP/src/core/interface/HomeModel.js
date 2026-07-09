@@ -1,6 +1,6 @@
-import handleFullscreen     from "../../pages/devTools/behaviors/fullscreen.js";
-import slideHorizontalV     from "../../pages/devTools/animations/slideHorizontalV.js";
-import toggleVisibility     from "../../pages/devTools/behaviors/toggleVisibility.js";
+import handleFullscreen     from "../../app/devTools/behaviors/fullscreen.js";
+import slideHorizontalV     from "../../app/devTools/animations/slideHorizontalV.js";
+import toggleVisibility     from "../../app/devTools/behaviors/toggleVisibility.js";
 import cleanDOM             from "../utils/tools/cleanDOM.js";
 import cleanDOMElements     from "../utils/tools/CleanDOMElements.js";
 

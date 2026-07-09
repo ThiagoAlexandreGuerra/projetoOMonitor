@@ -1,17 +1,16 @@
-export default function waitComponent(component) {
+import DOMToObject from "../../virtualDOM/getDOM/DOMToObject.js"
+export default function waitComponent(component = null , id = "") {
 
-    console.log(`component: `)
-    console.log(component)
     return new Promise(resolve => {
 
-        if (document.getElementById(component._id)) {
+        if (document.getElementById(component?._id || id)) {
             resolve(true);
             return;
         }
 
         const observer = new MutationObserver(() => {
 
-            if (document.getElementById(component._id)) {
+            if (document.getElementById(component?._id || id )) {
 
                 observer.disconnect();
 

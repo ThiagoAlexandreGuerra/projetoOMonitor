@@ -130,6 +130,8 @@ export function virtualDom(
 
 function updateNode(node){
 
+    console.log(`node:  `)
+    console.log(node)
     const past = snapshot();
 
     parent = findElementById(NOW, node.parentId);

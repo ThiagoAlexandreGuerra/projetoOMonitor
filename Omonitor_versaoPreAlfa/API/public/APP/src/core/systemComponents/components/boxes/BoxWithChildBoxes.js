@@ -4,7 +4,7 @@ import StandartBox  from "./StandardBox.js";
 export default class BoxWithChildBoxes extends StandartBox {
 
     constructor(
-        hasChildren = 1,
+        amountOfChildren = 1,
         layout = "vertical",
         onHeritage = false
     ) {
@@ -12,7 +12,7 @@ export default class BoxWithChildBoxes extends StandartBox {
         super(onHeritage);
 
         this._validateInput(
-            hasChildren,
+            amountOfChildren,
             onHeritage,
             layout
         );
@@ -22,7 +22,7 @@ export default class BoxWithChildBoxes extends StandartBox {
 
         this._classNName.push("BoxWithChildBoxes");
 
-        this._hasChildren = hasChildren;
+        this._amountOfChildren = amountOfChildren;
         this._layout = layout;
 
         this._son = null;
@@ -52,16 +52,16 @@ export default class BoxWithChildBoxes extends StandartBox {
     }
 
     _validateInput(
-        hasChildren,
+        amountOfChildren,
         onHeritage,
         layout
     ) {
 
         const validChildren =
-            typeof hasChildren === "number" &&
-            Number.isInteger(hasChildren) &&
-            hasChildren >= 0 &&
-            hasChildren <= 3;
+            typeof amountOfChildren === "number" &&
+            Number.isInteger(amountOfChildren) &&
+            amountOfChildren >= 0 &&
+            amountOfChildren <= 3;
 
         if (!validChildren) {
             throw new TypeError(
@@ -96,7 +96,7 @@ export default class BoxWithChildBoxes extends StandartBox {
         parentHeritage?.parentHeight == "auto"  || this.BWCResizeHeight(parentHeritage?.parentHeight);
     }
 
-    BWCResizeWidth(value){
+     BWCResizeWidth(value){
 
         this.setWidth(value);
        
@@ -108,6 +108,8 @@ export default class BoxWithChildBoxes extends StandartBox {
 
         return this;
     }
+
+    
 
     BWCResizeHeight(value){
 
@@ -167,7 +169,7 @@ export default class BoxWithChildBoxes extends StandartBox {
 
     _createRegularChildren() {
 
-        for (let i = 0; i < this._hasChildren; i++) {
+        for (let i = 0; i < this._amountOfChildren; i++) {
 
             const prop = this._auxFor[i];
 
@@ -179,7 +181,7 @@ export default class BoxWithChildBoxes extends StandartBox {
 
             this._defineChildSize(prop);
 
-            this._children.push(this[prop]);
+            this._addChild(this[prop]);
         }
     }
 
@@ -187,7 +189,7 @@ export default class BoxWithChildBoxes extends StandartBox {
 
         let currentParent = this;
 
-        for (let i = 0; i < this._hasChildren; i++) {
+        for (let i = 0; i < this._amountOfChildren; i++) {
 
             const prop = this._auxFor[i];
 
@@ -199,7 +201,7 @@ export default class BoxWithChildBoxes extends StandartBox {
 
             this._resizeCascadeChild(child, currentParent );
 
-            currentParent._children.push(child);
+            currentParent._addChild(child);
 
             currentParent = child;
         }

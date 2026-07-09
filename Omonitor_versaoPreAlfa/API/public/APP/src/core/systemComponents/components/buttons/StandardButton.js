@@ -29,8 +29,8 @@ export default class StandartButton extends StandartComponent{
             border                : "2px solid #b700ff",
             display               : "flex",
             justifyContent        : "center",
-            alignItems            : "center"
-
+            alignItems            : "center",
+            color                 : "white"                
         
         });
 

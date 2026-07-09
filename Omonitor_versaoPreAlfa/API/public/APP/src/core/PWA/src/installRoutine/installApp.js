@@ -1,8 +1,5 @@
 let deferredPrompt = null;
 
-/**
- * Armazena o evento de instalação quando ele estiver disponível.
- */
 window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -10,9 +7,6 @@ window.addEventListener("beforeinstallprompt", (e) => {
 
 });
 
-/**
- * Limpa o evento quando a instalação for concluída.
- */
 window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
 });
@@ -23,8 +17,7 @@ window.addEventListener("appinstalled", () => {
  */
 export default async function installApp() {
 
-    console.log(window.isSecureContext);
-    console.log(deferredPrompt)
+   
     if (!deferredPrompt) {
         return false;
     }

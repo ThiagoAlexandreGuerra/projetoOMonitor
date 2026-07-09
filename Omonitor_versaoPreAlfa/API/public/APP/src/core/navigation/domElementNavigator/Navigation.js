@@ -1,21 +1,23 @@
 import instantRender from "../../render/renders/instantRenderer.js";
-import getCaller from "../../systemComponents/utils/getters/getCaller.js";
+import getCaller from "../../utils/getters/getCaller.js";
 import cleanDOMElementsById from "../../utils/tools/cleanDOMElementsById.js";
 import inspectFunction from "../../utils/inspect/inspectFunction.js";
 
 export const LAYOUTS_LIST = new Map();
 
-export default class Navigation {
-
-    constructor() {
-
-        LAYOUTS_LIST.set("controller" , [
+LAYOUTS_LIST.set("controller" , [
             {
                 last:"",
                 current:"",
                 historic:[]
             }
         ])
+
+export default class Navigation {
+
+    constructor() {
+
+        
     
         this._currentLayoutClass = "start";
         this.renderNavigationContainer();
@@ -75,7 +77,6 @@ export default class Navigation {
         return this.element.classList.contains(className);
     }
 
-    
     checkClassesInDOM(...classes) {
         return classes
         .filter(className => document.querySelector(`.${className}`))
@@ -94,34 +95,52 @@ export default class Navigation {
             LAYOUTS_LIST.get(LAYOUTS_LIST.get("controller")[0].current).suspend();
             LAYOUTS_LIST.get(LAYOUTS_LIST.get("controller")[0].last).reactivate();
 
-            let aux = LAYOUTS_LIST.get("controller")[0].current;
-            LAYOUTS_LIST.get("controller")[0].current = LAYOUTS_LIST.get("controller")[0].last;
-            LAYOUTS_LIST.get("controller")[0].last = aux;
-            LAYOUTS_LIST.get("controller")[0].historic.push(LAYOUTS_LIST.get("controller")[0].current)
-
-           
-
+            this.swapCurrentLastLayout(LAYOUTS_LIST.get("controller")[0].last , LAYOUTS_LIST.get("controller")[0].current);
         }
 
     }
 
     goTo(nextLayout){
+      
+        let callerName = getCaller().name;
+        let nextLayoutName =  nextLayout.name || inspectFunction(nextLayout).name ;
        
-        let callerLayoutName =  nextLayout.name || inspectFunction(nextLayout).name ;
-        
         return  ()=>{
           
-            if(LAYOUTS_LIST.has(callerLayoutName)){
+            if(LAYOUTS_LIST.has(nextLayoutName)){
                 
-                LAYOUTS_LIST.get(callerLayoutName).reactivate();
+                LAYOUTS_LIST.get(nextLayoutName).reactivate();
 
             }else{
-
                 let currentLayoutName =  LAYOUTS_LIST.get("controller")[0].current;
                 let currentLayoutComponent = LAYOUTS_LIST.get(currentLayoutName);
                 currentLayoutComponent.suspend();
                 nextLayout(this)
             }
+            this.swapCurrentLastLayout(nextLayoutName , callerName);
         };
+    }
+
+    swapCurrentLastLayout(newLayout = "" , callerName){
+     
+        LAYOUTS_LIST.get("controller")[0].current = newLayout;
+        LAYOUTS_LIST.get("controller")[0].last = callerName;
+        
+        let lastHistoricStorage = LAYOUTS_LIST.get("controller")[0].historic.slice(-1);
+        if(newLayout != lastHistoricStorage){
+            LAYOUTS_LIST.get("controller")[0].historic.push(newLayout)
+        }
+    }
+
+    addNewLayout(vitualBody, callerLayoutName){
+        
+        let controllerLayout = LAYOUTS_LIST.get("controller");
+        controllerLayout[0].current =  callerLayoutName;
+        controllerLayout[0].historic.push(callerLayoutName)
+        LAYOUTS_LIST.set(callerLayoutName, vitualBody);
+    }
+
+    getHistoric(){
+        return LAYOUTS_LIST.get("controller")[0].historic;
     }
 }

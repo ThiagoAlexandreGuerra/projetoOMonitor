@@ -17,7 +17,7 @@ export default class Sidebar extends StandardComponent{
         this._updateStyleConfig({
 
             width           : "80px",
-            height          : "100%",
+            height          : "100vh",
             backgroundColor : "#131212",
             display         : "flex",
             position        : "fixed",

@@ -20,19 +20,13 @@ export default class AppInstallButton extends  ClickEventButton{
                 textContent:        "Install App",
         });
 
-        this._swapStyleConfig({
-            color:              "white",
-            width:               "100px",
-            height:             "50px",
+        this._updateStyleConfig({
+            color:              "white", 
             border:             "2px solid #ffc400",
-            right:              "270px",
-            top:                "35px",
-            position:           "absolute",
-            borderRadius:       "5px",  
-            cursor:             "pointer"  
+            
         })
 
-        if(!(isAppInstalled() && canInstallApp())){
+        if((isAppInstalled())){
             this.setDisplay("none");
         }
 

@@ -1,6 +1,9 @@
 import HomeModel from "./HomeModel.js";
-import HomeView from "../../pages/interface/HomeView.js";
+import HomeView from "../../app/interface/HomeView.js";
 import PWA from "../PWA/main/PWA.js";
+import IDB from "../PWA/data/indexDB/IDB.js";
+import openSystemDataBase from "../PWA/data/indexDB/IDBS.js";
+import ImageStorage from "../PWA/data/imageStorage/main/imageStorage.js";
 
 export default class HomeController {
 
@@ -10,7 +13,7 @@ export default class HomeController {
         this.view  = new HomeView();
     }
 
-    init() {
+    async init() {
         
         this.view.criarLayout({
 
@@ -20,7 +23,8 @@ export default class HomeController {
             onCleanDOM:             this.model._cleanDOM(),
             onCleanDOMElements:     this.model._cleanDOMElements(),
         });
+
+      //  openSystemDataBase();
         
     }
-
 }

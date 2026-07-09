@@ -1,11 +1,11 @@
-import GetPath from "../../../../pages/devTools/services/GetPath.js";
+import GetPath from "../../../../app/devTools/services/GetPath.js";
 export default class Favicon {
 
     constructor(
         title = "Lotus",
         caminhoFaviconImage = null
     ) {
-        this._paths = new GetPath().getMascoteLogo();
+        this._paths = GetPath.getMonitorLogo();
 
         this._configurarGuia(
             title,

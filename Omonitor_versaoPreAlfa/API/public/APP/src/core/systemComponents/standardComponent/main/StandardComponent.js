@@ -1,12 +1,12 @@
-import createVirtualNode from "../../../virtualDOM/createVirtualNode/createVirtualNode.js";
-import StyleController from "../StyleController.js";
-import getId from "../../componentIdentify/componentId/getId.js";
-import {virtualDom} from "../../../virtualDOM/main/virtualDom.js";
-import JoinLayers from "../JoinLayers.js";
+import createVirtualNode    from "../../../virtualDOM/createVirtualNode/createVirtualNode.js";
+import StyleController      from "../StyleController.js";
+import getId                from "../../componentIdentify/componentId/getId.js";
+import {virtualDom}         from "../../../virtualDOM/main/virtualDom.js";
+import JoinLayers           from "../JoinLayers.js";
+import getCaller            from "../../../utils/getters/getCaller.js";
+import { VALID_EVENTS }     from "../isValid/lists.js";
+import isComponentInDom     from "../../../render/renderCheck/isComponentInDom.js";
 import JoinStylesGetersAndSetersToAssembly from "../JoinStylesGetersAndSetersToAssembly.js";
-import getCaller from "../../utils/getters/getCaller.js";
-import { VALID_EVENTS } from "../isValid/lists.js";
-import isComponentInDom from "../../../render/renderCheck/isComponentInDom.js";
 
 export default class StandardComponent extends JoinStylesGetersAndSetersToAssembly{
 
@@ -46,6 +46,10 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
         return this?._children[index];
     }
 
+    getChildren(){
+        return this._children;
+    }
+
     getId(){
         return this._id;
     }
@@ -67,6 +71,49 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
         }
 
         return classNameReturn.trim();
+    }
+
+    getElement(){
+        return this.element;
+    }
+
+    setComponentHeightResponsivenessFactors(...responsivenessHeight){
+        this._componentHeightResponsivenessFactors  = responsivenessHeight;
+    }
+
+    setComponentWidthResponsivenessFactors(...responsivenessWidth){
+        this._componentWidthResponsivenessFactors   = responsivenessWidth;
+    }
+
+    setChildrenHeightResponsivenessFactors(...responsivenessHeight){
+        
+       this.getChildren().forEach(comp => {
+            responsivenessHeight.forEach((reponssive)=>{
+
+                reponssive.id.forEach((id)=>{
+                    if(comp._id.includes(id)){
+                        comp.setComponentHeightResponsivenessFactors({factor:reponssive.factor , windowSize:reponssive.windowSize})
+                    }
+                })
+            })
+            
+            if(comp._hasChildren){
+                comp.setChildrenHeightResponsivenessFactors(...responsivenessHeight)
+            }
+       });;
+    }
+
+    setChildrenWidthResponsivenessFactors(...responsivenessWidth){
+        this._componentWidthResponsivenessFactors   = responsivenessWidth;
+    }
+
+
+    getComponentHeightResponsivenessFactors(){
+        return this._componentHeightResponsivenessFactors;
+    }
+
+    getComponentWidthResponsivenessFactors(){
+        return this._componentWidthResponsivenessFactors;
     }
 
     setThisAndChildrenBackgroundColor(value){
@@ -164,7 +211,6 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
 
         if(child === this) throw new Error("Self-referencing child nodes are not allowed.")
     
-        if(!this._isChild){
 
             if (
                 typeof child !== "object" ||
@@ -185,18 +231,17 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
                 );
             } 
             
+            this._hasChildren = true;
             child._parentId = this._id;
             if(child._onHeritage){this._heritageRoutine(child)}
             this._children.push(child);
-            child._isChilld = true;
+           
+            child._isChild = true;
             Object.assign(child ,{
                     removeMeOfParentChildrenList: this._removeChild.bind(this),
                     parentUpdate: this.update.bind(this)
                 } 
             )
-            
-            
-        }
 
         return this;
     }
@@ -217,6 +262,8 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
         this._children = this._children.filter(
             child => child !== childToRemove
         );
+
+        if(this._children.length == 0){this._hasChildren = false;}
 
         this.update();
         
@@ -244,6 +291,7 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
     }
 
     update(){
+       
         this.element = null;
         virtualDom(this._jumpToCreateComponent());
 
@@ -261,10 +309,13 @@ export default class StandardComponent extends JoinStylesGetersAndSetersToAssemb
 
     remove(){
 
-        try{
-            this.removeMeOfParentChildrenList(this);
-        }catch(e){
-            console.error(e);
+        if(!this._id.includes(`VTB`)){
+
+            try{
+                this.removeMeOfParentChildrenList(this);
+            }catch(e){
+                console.error(e);
+            }
         }
         
         virtualDom(this._jumpToCreateComponent(), true)

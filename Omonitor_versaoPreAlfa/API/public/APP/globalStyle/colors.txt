@@ -1,7 +1,7 @@
 thisYellow= #FFD500;
 thisRed   = #ffd900;
 
-selectColor   = #02008f;
+selectColor   = #8f0000;
 
 
 const colors = [
